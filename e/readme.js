@@ -30,7 +30,7 @@ function finish(condition) {
         './std/help.js',
         './std/mod.js',
         './std/unmod.js',
-        './e/mt.json')
+        './e/mt.js')
     for (let i = 0; i < Log.length; i++) Log[i].remove()
     deb(`<span>
         mesatown-project/version:${globalThis.__version__}
