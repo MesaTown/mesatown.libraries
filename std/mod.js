@@ -6,9 +6,9 @@ const I8736 = /^\.\S+(\.js)$/
 function main() {
     function diag(data) {
         if (S76.test(data) || I8736.test(data)) {
-            AddLibraries(data)
+            AddLibrary(data)
         } else if (D364.test(data)) {
-            AddLibraries(
+            AddLibrary(
                 './std/bind.js',
                 './std/clear.js',
                 './std/close.js',
