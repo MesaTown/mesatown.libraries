@@ -12,7 +12,7 @@ function main() {
                 for (const v in lib) {
                     glib[v] = lib[v]
                     delete lib[v]
-                }  AddLibraries(
+                }  AddLibrary(
                     './std/bind.js',
                     './std/clear.js',
                     './std/close.js',
