@@ -20,16 +20,18 @@ function main() {
             info() {
                 const version = __version__,
                 contents = [
-                    'Fixed small bugs and features',
+                    'Fixed bugs and features',
+                    '\n',
+                    'Changed from AddLibrary to AddLibraries',
+                    'Modified code for adding and removing\nlibraries for mod, unmod',
                 ]
-                log(
-                    `In version ${version}\n`
+                log(`In version ${version}\n`
                     + contents.map((f, i, a) => {
                         return a.length - 1 === i
                         ? f.replace(/^/, '└─ ').replace(/\n/g, '\n ⠀⠀⠀ ')
+                        : /^\n$/.test(f) ? '│'
                         : f.replace(/^/, '├─ ').replace(/\n/g, '\n│ ⠀⠀')
-                    }).join('\n')
-                )
+                    }).join('\n'))
             }
         },
         help: {
@@ -60,7 +62,7 @@ function main() {
         },
         qload: {
             quick() {
-                AddLibrary(
+                AddLibraries(
                     './mod/type/any.js',
                     './mod/type/bool.js',
                     './mod/type/num.js',
@@ -124,6 +126,7 @@ function main() {
         meta: { help: 'Display the current time' },
         execute: () => {
             function tds(num) {
+                if (num === 0) num = 12
                 return String(num).length === 1
                     ? num = `0${num}` : num
             }
@@ -149,11 +152,11 @@ function main() {
     })
     addVModule('re', {
         meta: { help: 'Reload the page', hidden: true },
-        execute: () => ctrlR(),
+        execute: () => reload(),
     })
     addVModule('reload', {
         meta: { help: 'Reload the page' },
-        execute: () => ctrlR(),
+        execute: () => reload(),
     })
 
     return {
