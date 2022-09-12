@@ -19,23 +19,25 @@ function run(data) {
 }
 function get_oc() {
     const map = JSON.parse(localStorage.getItem('oc//__hash_map'))
-    for (const key of Object.keys(map)) {
-        const hash = map[key]
-        if (__dev__()) console.info(`%c[dev::ocsc4i.hash]%c \\\\${key}\n%c${hash}`, 'color: #AE2BFF', '', 'color: #8D8E91')
-        if (hash == '343d997c827c809e588137fdd7cffad1086a61c37d2cf1da1c89b87566c2a8f7'
-            && !/android|tablet|tizen|ios/i.test(platform.os)) {
-            AddVModule('open-comp', {
-                meta: { help: 'reperire', tip: '/params/', hidden: true },
-                require: ['any*'],
-                execute: () => {},
-                onstart: () => {
-                    openRender()
-                },
-                oncomplete: () => {
-                    render.innerHTML = ''
-                    is('cli-win').style.removeProperty('animation')
-                }
-            })
+    if (map) {
+        for (const key of Object.keys(map)) {
+            const hash = map[key]
+            if (__dev__()) console.info(`%c[dev::ocsc4i.hash]%c \\\\${key}\n%c${hash}`, 'color: #AE2BFF', '', 'color: #8D8E91')
+            if (hash == '343d997c827c809e588137fdd7cffad1086a61c37d2cf1da1c89b87566c2a8f7'
+                && !/android|tablet|tizen|ios/i.test(platform.os)) {
+                AddVModule('open-comp', {
+                    meta: { help: 'reperire', tip: '/params/', hidden: true },
+                    require: ['any*'],
+                    execute: () => {},
+                    onstart: () => {
+                        openRender()
+                    },
+                    oncomplete: () => {
+                        render.innerHTML = ''
+                        is('cli-win').style.removeProperty('animation')
+                    }
+                })
+            }
         }
     }
 }
