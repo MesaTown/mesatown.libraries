@@ -1,52 +1,32 @@
-function addVModule(name, data) {
-    function main() { return data }
-    if (Array.isArray(name)) {
-        name.forEach(f => lib[f] = main)
-    } else lib[name] = main
-}
-
-function remVModule(name) {
-    let i = 0
-    const t = setInterval(() => {
-        if (lib[name]) delete lib[name]
-        if (!lib[name]) {
-            if (i > 3367) clearInterval(t)
-            i++
-        }
-    }, 10)
-}
+const version = '2.0'
 
 function reset() {
     sessionStorage.removeItem('reset-factory')
     localStorage.removeItem('allow-readme')
     localStorage.removeItem('disallow-readme')
-    __terminal_placeholder('{allow|disallow}')
+    SetPlaceholder('allow or disallow')
 }
 function finish(condition) {
-    AddLibrary(
-        './std/bind.js',
-        './std/clear.js',
-        './std/close.js',
-        './std/help.js',
-        './std/mod.js',
-        './std/unmod.js',
-        './e/mt.js')
+    AddLibraries('./e/ocsc4i.js',
+        './std/bind.js', './std/clear.js', './std/close.js',
+        './std/help.js', './std/mod.js', './std/unmod.js')
     for (let i = 0; i < Log.length; i++) Log[i].remove()
     deb(`<span>
         mesatown-project/version:${globalThis.__version__}
         <br>Enter <span class="px-1 fw-bold">help</span> to display the commands.
         </span>`, { duration: 0, html: true })
-    __terminal_placeholder('help {command?}')
-    remVModule('readme')
-    remVModule('allow')
-    remVModule('disallow')
+    SetPlaceholder('help {command?}')
+    RemVModule('readme')
+    RemVModule('allow')
+    RemVModule('disallow')
     if (/^not\s.+/.test(condition)) {
         const [_, iglibs] = condition.split(/\s/)
         iglibs.split(/;/).forEach(f => {
-            remVModule(f)
+            RemVModule(f)
         })
         localStorage.setItem('allow-readme', false)
     } else localStorage.setItem('allow-readme', true)
+    localStorage.setItem('version-of-readme', `v${version}`)
 }
 
 function main() {
@@ -55,7 +35,9 @@ function main() {
         require: ['str*'],
         execute: () => {},
         onload: () => {
-            if (sessionStorage.getItem('reset-factory') === 'true' || !localStorage.getItem('allow-readme')) {
+            if (sessionStorage.getItem('reset-factory') === 'true'
+                || !localStorage.getItem('allow-readme')
+                || localStorage.getItem('version-of-readme') !== `v${version}`) {
                 reset()
                 deb(`<div class="d-flex">
                     <h3 style="font-size: calc(1rem + 0.4vw)">What is Mesa Town</h3>
@@ -76,8 +58,9 @@ function main() {
                     <h4 class="fs-6" style="font-size: calc(1rem + 0.4vw)">2. THIRD-PARTY ────</h4>
                     The third-party libraries used for the web are as follows:
                     <div class="ms-4">
-                    Bootstrap ─ <a href="https://getbootstrap.com/docs/5.2/about/license" class="text-decoration-none" target="_blank">view license</a>
-                    <br>platform.js ─ <a href="https://github.com/bestiejs/platform.js/blob/master/LICENSE" class="text-decoration-none" target="_blank">view license</a>
+                    Bootstrap ─ <a href="https://getbootstrap.com/docs/5.2/about/license" class="text-decoration-none" target="_blank" tabindex="-1">view license</a>
+                    <br>platform.js ─ <a href="https://github.com/bestiejs/platform.js/blob/master/LICENSE" class="text-decoration-none" target="_blank" tabindex="-1">view license</a>
+                    <br>webtoolkit.sha256.js ─ <a href="http://www.webtoolkit.info/license1/index.html" class="text-decoration-none" target="_blank" tabindex="-1">view license</a>
                     </div>
                     </div>
                     <div class="d-flex flex-column mt-3">
@@ -105,11 +88,11 @@ function main() {
                     'flex-direction': 'column'
                 })
 
-                addVModule(['allow'], {
+                AddVModule('allow', {
                     meta: { tip: '' },
                     execute: () => finish(),
                 })
-                addVModule(['disallow'], {
+                AddVModule('disallow', {
                     meta: { tip: '' },
                     execute: () => finish('not bind;mod;unmod'),
                 })

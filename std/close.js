@@ -1,9 +1,1 @@
-function main() {
-    return {
-        meta: {
-            help: 'Returns the current state to default\n(can also use `home` or `town`)',
-        },
-        require: [],
-        execute: () => {},
-    }
-}
+const meta={help:'Returns the current state to default\n(can also use `home` or `town`)'};function main(){return{meta,require:[],execute:()=>{},onload:()=>{AddVModule('home', {meta,execute:()=>{}})}}}
