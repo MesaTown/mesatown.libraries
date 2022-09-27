@@ -88,7 +88,7 @@ function main() {
                 },
             })
             AddVModule('reload', { meta: { help: 'Reload the page' }, execute: () => reload() })
-            parseURL()
+            setTimeout(() => parseURL(), 0)
         }
     }
 }
