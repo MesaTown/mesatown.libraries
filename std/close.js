@@ -1,1 +1,9 @@
-const meta={help:'Returns the current state to default\n(can also use `home` or `town`)'};function main(){return{meta,require:[],execute:()=>{},onload:()=>{AddVModule('home', {meta,execute:()=>{}})}}}
+function main(){
+    return {
+        descript: "Returns the current state to default\n(can also use [home])",
+        marker: null,
+        aliases: "home",
+        require: [],
+        execute: () => {},
+    }
+}
